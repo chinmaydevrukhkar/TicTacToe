@@ -98,8 +98,8 @@ class GameMethods {
         Provider.of<RoomDataProvider>(context, listen: false);
 
     for (int i = 0; i < roomDataProvider.displayElements.length; i++) {
-      roomDataProvider.updateDisplayElement(i, '');
+      roomDataProvider.updateDisplayElements(i, '');
     }
-    roomDataProvider.setFilledBoxesToZero();
+    roomDataProvider.setFilledBoxesTo0();
   }
 }

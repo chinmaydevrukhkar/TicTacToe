@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:mp_tictactoe/resources/game_methods.dart';
 
 void showSnackBar(BuildContext context, String content) {
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    content: Text(content),
-  ));
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(content),
+    ),
+  );
 }
 
 void showGameDialog(BuildContext context, String text) {
@@ -20,7 +22,9 @@ void showGameDialog(BuildContext context, String text) {
                 GameMethods().clearBoard(context);
                 Navigator.pop(context);
               },
-              child: const Text('Play Again'),
+              child: const Text(
+                'Play Again',
+              ),
             ),
           ],
         );

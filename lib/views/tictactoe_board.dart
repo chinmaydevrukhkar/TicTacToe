@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mp_tictactoe/provider/room_data_provider.dart';
-import 'package:mp_tictactoe/resources/socket_method.dart';
+import 'package:mp_tictactoe/resources/socket_methods.dart';
 import 'package:provider/provider.dart';
 
 class TicTacToeBoard extends StatefulWidget {
-  const TicTacToeBoard({super.key});
+  const TicTacToeBoard({Key? key}) : super(key: key);
 
   @override
   State<TicTacToeBoard> createState() => _TicTacToeBoardState();
@@ -19,7 +19,7 @@ class _TicTacToeBoardState extends State<TicTacToeBoard> {
     _socketMethods.tappedListener(context);
   }
 
-  tapped(int index, RoomDataProvider roomDataProvider) {
+  void tapped(int index, RoomDataProvider roomDataProvider) {
     _socketMethods.tapGrid(
       index,
       roomDataProvider.roomData['_id'],
@@ -31,6 +31,7 @@ class _TicTacToeBoardState extends State<TicTacToeBoard> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     RoomDataProvider roomDataProvider = Provider.of<RoomDataProvider>(context);
+
     return ConstrainedBox(
       constraints: BoxConstraints(
         maxHeight: size.height * 0.7,
@@ -59,19 +60,18 @@ class _TicTacToeBoardState extends State<TicTacToeBoard> {
                     child: Text(
                       roomDataProvider.displayElements[index],
                       style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 100,
-                        shadows: [
-                          Shadow(
-                            blurRadius: 40,
-                            color:
-                                roomDataProvider.displayElements[index] == 'O'
-                                    ? Colors.red
-                                    : Colors.blue,
-                          )
-                        ],
-                      ),
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 100,
+                          shadows: [
+                            Shadow(
+                              blurRadius: 40,
+                              color:
+                                  roomDataProvider.displayElements[index] == 'O'
+                                      ? Colors.red
+                                      : Colors.blue,
+                            ),
+                          ]),
                     ),
                   ),
                 ),

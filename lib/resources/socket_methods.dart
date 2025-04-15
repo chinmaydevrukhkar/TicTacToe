@@ -12,7 +12,7 @@ class SocketMethods {
 
   Socket get socketClient => _socketClient;
 
-  //EMITS
+  // EMITS
   void createRoom(String nickname) {
     if (nickname.isNotEmpty) {
       _socketClient.emit('createRoom', {
@@ -39,7 +39,7 @@ class SocketMethods {
     }
   }
 
-  //LISTENERS
+  // LISTENERS
   void createRoomSuccessListener(BuildContext context) {
     _socketClient.on('createRoomSuccess', (room) {
       Provider.of<RoomDataProvider>(context, listen: false)
@@ -57,8 +57,19 @@ class SocketMethods {
   }
 
   void errorOccuredListener(BuildContext context) {
-    _socketClient.on('errorOccured', (data) {
+    _socketClient.on('errorOccurred', (data) {
       showSnackBar(context, data);
+    });
+  }
+
+  void updatePlayersStateListener(BuildContext context) {
+    _socketClient.on('updatePlayers', (playerData) {
+      Provider.of<RoomDataProvider>(context, listen: false).updatePlayer1(
+        playerData[0],
+      );
+      Provider.of<RoomDataProvider>(context, listen: false).updatePlayer2(
+        playerData[1],
+      );
     });
   }
 
@@ -69,25 +80,16 @@ class SocketMethods {
     });
   }
 
-  //Functions
-  void updatePlayerStateListener(BuildContext context) {
-    _socketClient.on('updatePlayers', (playerData) {
-      Provider.of<RoomDataProvider>(context, listen: false)
-          .updatePlayer1(playerData[0]);
-
-      Provider.of<RoomDataProvider>(context, listen: false)
-          .updatePlayer2(playerData[1]);
-    });
-  }
-
   void tappedListener(BuildContext context) {
     _socketClient.on('tapped', (data) {
       RoomDataProvider roomDataProvider =
           Provider.of<RoomDataProvider>(context, listen: false);
-      roomDataProvider.updateDisplayElement(data['index'], data['choice']);
+      roomDataProvider.updateDisplayElements(
+        data['index'],
+        data['choice'],
+      );
       roomDataProvider.updateRoomData(data['room']);
-
-      //check winner
+      // check winnner
       GameMethods().checkWinner(context, _socketClient);
     });
   }
@@ -106,7 +108,7 @@ class SocketMethods {
 
   void endGameListener(BuildContext context) {
     _socketClient.on('endGame', (playerData) {
-      showGameDialog(context, '${playerData['nickname']} won the game');
+      showGameDialog(context, '${playerData['nickname']} won the game!');
       Navigator.popUntil(context, (route) => false);
     });
   }

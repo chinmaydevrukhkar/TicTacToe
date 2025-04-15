@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
 class CustomText extends StatelessWidget {
-  final List<Shadow> shadow;
+  final List<Shadow> shadows;
   final String text;
   final double fontSize;
-  const CustomText(
-      {super.key,
-      required this.shadow,
-      required this.text,
-      required this.fontSize});
+  const CustomText({
+    Key? key,
+    required this.shadows,
+    required this.text,
+    required this.fontSize,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +17,9 @@ class CustomText extends StatelessWidget {
       text,
       style: TextStyle(
         color: Colors.white,
-        fontSize: fontSize,
         fontWeight: FontWeight.bold,
-        shadows: shadow,
+        fontSize: fontSize,
+        shadows: shadows,
       ),
     );
   }

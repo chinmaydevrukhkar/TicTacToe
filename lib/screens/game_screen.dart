@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mp_tictactoe/provider/room_data_provider.dart';
-import 'package:mp_tictactoe/resources/socket_method.dart';
-import 'package:mp_tictactoe/widgets/scoreboard.dart';
-import 'package:mp_tictactoe/widgets/tictactoe_board.dart';
-import 'package:mp_tictactoe/widgets/waiting_lobby.dart';
+import 'package:mp_tictactoe/resources/socket_methods.dart';
+import 'package:mp_tictactoe/views/scoreboard.dart';
+import 'package:mp_tictactoe/views/tictactoe_board.dart';
+import 'package:mp_tictactoe/views/waiting_lobby.dart';
 import 'package:provider/provider.dart';
 
 class GameScreen extends StatefulWidget {
   static String routeName = '/game';
-  const GameScreen({super.key});
+  const GameScreen({Key? key}) : super(key: key);
 
   @override
   State<GameScreen> createState() => _GameScreenState();
@@ -21,7 +21,7 @@ class _GameScreenState extends State<GameScreen> {
   void initState() {
     super.initState();
     _socketMethods.updateRoomListener(context);
-    _socketMethods.updatePlayerStateListener(context);
+    _socketMethods.updatePlayersStateListener(context);
     _socketMethods.pointIncreaseListener(context);
     _socketMethods.endGameListener(context);
   }
@@ -40,7 +40,7 @@ class _GameScreenState extends State<GameScreen> {
                   const Scoreboard(),
                   const TicTacToeBoard(),
                   Text(
-                      '${roomDataProvider.roomData['turn']['nickname']}\'s turn')
+                      '${roomDataProvider.roomData['turn']['nickname']}\'s turn'),
                 ],
               ),
             ),
